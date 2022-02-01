@@ -14,6 +14,7 @@
 		9FD1A7AD27A9B31C000F2593 /* Vier_GewinntTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD1A7AC27A9B31C000F2593 /* Vier_GewinntTests.swift */; };
 		9FD1A7B727A9B31C000F2593 /* Vier_GewinntUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD1A7B627A9B31C000F2593 /* Vier_GewinntUITests.swift */; };
 		9FD1A7B927A9B31C000F2593 /* Vier_GewinntUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD1A7B827A9B31C000F2593 /* Vier_GewinntUITestsLaunchTests.swift */; };
+		9FD1A7C627A9B34A000F2593 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD1A7C527A9B34A000F2593 /* GameModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		9FD1A7B227A9B31C000F2593 /* Vier GewinntUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Vier GewinntUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FD1A7B627A9B31C000F2593 /* Vier_GewinntUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vier_GewinntUITests.swift; sourceTree = "<group>"; };
 		9FD1A7B827A9B31C000F2593 /* Vier_GewinntUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vier_GewinntUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9FD1A7C527A9B34A000F2593 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				9FD1A79D27A9B31B000F2593 /* ContentView.swift */,
 				9FD1A79F27A9B31C000F2593 /* Assets.xcassets */,
 				9FD1A7A127A9B31C000F2593 /* Preview Content */,
+				9FD1A7C527A9B34A000F2593 /* GameModel.swift */,
 			);
 			path = "Vier Gewinnt";
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 			files = (
 				9FD1A79E27A9B31B000F2593 /* ContentView.swift in Sources */,
 				9FD1A79C27A9B31B000F2593 /* Vier_GewinntApp.swift in Sources */,
+				9FD1A7C627A9B34A000F2593 /* GameModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,7 +440,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -465,7 +469,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
