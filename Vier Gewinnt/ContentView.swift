@@ -13,29 +13,52 @@ struct ContentView: View {
     var body: some View {
         ScrollView
         {
-            HStack
+            VStack
             {
-                ForEach(Array(zip(gameField.field.indices, gameField.field)), id: \.1.id)
+                gamefieldView
+                playerMoveView
+                
+            }
+        }
+    }
+    
+    var gamefieldView: some View
+    {
+        HStack
+        {
+            ForEach(Array(zip(gameField.field.indices, gameField.field)), id: \.1.id)
+            {
+                i, column in
+                
+                VStack
                 {
-                    i, column in
-                    
-                    VStack
+                    ForEach(Array(zip(column.indices, column)), id: \.1.id)
                     {
-                        ForEach(Array(zip(column.indices, column)), id: \.1.id)
+                        j, row in
+                        HStack
                         {
-                            j, row in
-                            HStack
-                            {
-                                Button {
-                                    gameField.addMove(player: gameField.playersTurn, column: i)
-                                } label: {
-                                    stoneView(row)
-                                }
+                            Button {
+                                gameField.addMove(player: gameField.playersTurn, column: i)
+                            } label: {
+                                stoneView(row)
                             }
+                            .buttonStyle(.plain)
                         }
                     }
                 }
             }
+        }
+        .padding()
+        .background(.indigo)
+        .cornerRadius(20)
+    }
+    
+    var playerMoveView: some View
+    {
+        HStack
+        {
+            stoneView(.init(player: gameField.playersTurn))
+            Text("Player \(gameField.playersTurn.rawValue) move")
         }
     }
     

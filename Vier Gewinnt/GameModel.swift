@@ -103,13 +103,13 @@ public struct Stone: Identifiable, Hashable
             case .two:
                 return .yellow
             case .none:
-                return .gray
+                return Color(uiColor: UIColor.systemBackground)
         }
     }
 }
-public enum Player
+public enum Player: Int
 {
-    case one
+    case one = 1
     case two
     case none
     
