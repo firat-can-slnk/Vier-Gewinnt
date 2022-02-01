@@ -36,7 +36,25 @@ public class GameField: ObservableObject
     
     @Published var playersTurn: Player = .one
     
-    @Published var winner: Player = .none
+    @Published var winner: Player? = nil
+    
+    var gameOver: Bool = false
+    
+    public func reset()
+    {
+        self.field = .init(repeating: .init(repeating: .init(player: .none), count: GameField.rows), count: GameField.columns)
+        
+        for column in 0..<GameField.columns {
+            for row in 0..<GameField.rows
+            {
+                self.field[column][row] = .init(player: .none)
+            }
+        }
+        
+        playersTurn = .one
+        winner = nil
+        gameOver = false
+    }
     
     public func addMove(player: Player, column: Int)
     {
@@ -54,7 +72,7 @@ public class GameField: ObservableObject
     
     public func canMove(player: Player, cell: (row: Int, column: Int)) -> Bool
     {
-        return !isCellOccupied(cell) && playersTurn == player && winner == .none
+        return !isCellOccupied(cell) && playersTurn == player && winner == nil
     }
     
     private func isCellOccupied(_ cell: (row: Int, column: Int)) -> Bool
@@ -78,12 +96,27 @@ public class GameField: ObservableObject
         winner = winner ?? calculateHorizontalWinner()
         winner = winner ?? calculateDiagonalLeftBottomToRightTopWinner()
         winner = winner ?? calculateDiagonalLeftTopToRightBottomWinner()
+        winner = winner ?? calculateTie()
         
         if let winner = winner {
             self.winner = winner
         }
     }
-    
+    private func calculateTie() -> Player?
+    {
+        if field.allSatisfy({ x in
+            x.allSatisfy { stone in
+                stone.player.isPlayer
+            }
+        })
+        {
+            return Player.none
+        }
+        else
+        {
+            return nil
+        }
+    }
     private func calculateVerticalWinner() -> Player?
     {
         for column in field

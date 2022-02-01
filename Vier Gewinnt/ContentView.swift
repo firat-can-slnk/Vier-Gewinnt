@@ -9,15 +9,46 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var gameField = GameModel().gameField
+    @State var counter: (one: Int, two: Int) = (0, 0)
     
     var body: some View {
         ScrollView
         {
             VStack
             {
+                scoreBoardView
                 gamefieldView
                 playerMoveView
                 winnerView
+                restartView
+            }
+        }
+    }
+    
+    var scoreBoardView: some View
+    {
+        VStack
+        {
+            Text("Scores")
+            HStack
+            {
+                ZStack
+                {
+                    stoneView(.init(player: Player.one))
+                        .opacity(0.5)
+                    Text("\(counter.one)")
+                        .font(.title3)
+                        .bold()
+                }
+                Text(":")
+                ZStack
+                {
+                    stoneView(.init(player: Player.two))
+                        .opacity(0.5)
+                    Text("\(counter.two)")
+                        .font(.title3)
+                        .bold()
+                }
             }
         }
     }
@@ -39,6 +70,25 @@ struct ContentView: View {
                         {
                             Button {
                                 gameField.addMove(player: gameField.playersTurn, column: i)
+                                
+                                if let winner = gameField.winner, !gameField.gameOver
+                                {
+                                    if winner == .one
+                                    {
+                                        counter.one += 1
+                                    }
+                                    else if winner == .two
+                                    {
+                                        counter.two += 1
+                                    }
+                                    else if winner == .none
+                                    {
+                                        counter.one += 1
+                                        counter.two += 1
+                                    }
+                                    gameField.gameOver = true
+                                }
+                                
                             } label: {
                                 stoneView(row)
                             }
@@ -66,12 +116,29 @@ struct ContentView: View {
     {
         HStack
         {
-            if let winner = gameField.winner, winner != Player.none
+            if let winner = gameField.winner
             {
-                stoneView(.init(player: winner))
-                Text("Player \(winner.rawValue) won!")
+                if winner != .none
+                {
+                    stoneView(.init(player: winner))
+                    Text("Player \(winner.rawValue) won!")
+                }
+                else
+                {
+                    Text("Thats a tie!")
+                }
             }
         }
+    }
+    
+    var restartView: some View
+    {
+        Button {
+            self.gameField.reset()
+        } label: {
+            Text("Restart")
+        }
+
     }
     
     public func stoneView(_ stone: Stone) -> some View
