@@ -36,6 +36,8 @@ public class GameField: ObservableObject
     
     @Published var playersTurn: Player = .one
     
+    @Published var winner: Player = .none
+    
     public func addMove(player: Player, column: Int)
     {
         if let lastCell = getLastCell(column: column)
@@ -44,6 +46,7 @@ public class GameField: ObservableObject
             if canMove(player: player, cell: lastCell)
             {
                 field[lastCell.column][lastCell.row] = .init(player: player)
+                calculateWinner()
                 switchPlayer()
             }
         }
@@ -51,7 +54,7 @@ public class GameField: ObservableObject
     
     public func canMove(player: Player, cell: (row: Int, column: Int)) -> Bool
     {
-        return !isCellOccupied(cell) && playersTurn == player
+        return !isCellOccupied(cell) && playersTurn == player && winner == .none
     }
     
     private func isCellOccupied(_ cell: (row: Int, column: Int)) -> Bool
@@ -66,6 +69,75 @@ public class GameField: ObservableObject
         }
         
         return field != nil ? (row: field!, column: column) : nil
+    }
+    
+    private func calculateWinner()
+    {
+        var winner: Player? = nil
+        winner = winner ?? calculateVerticalWinner()
+        winner = winner ?? calculateHorizontalWinner()
+        winner = winner ?? calculateDiagonalLTRWinner()
+        winner = winner ?? calculateDiagonalRTLWinner()
+        
+        if let winner = winner {
+            self.winner = winner
+        }
+    }
+    
+    private func calculateVerticalWinner() -> Player?
+    {
+        for column in field
+        {
+            for i in 0..<column.count
+            {
+                if(column.count >= i + 4)
+                {
+                    if column[i].player == column[i+1].player &&
+                        column[i].player == column[i+2].player &&
+                        column[i].player == column[i+3].player &&
+                        column[i].player != .none
+                    {
+                        return column[i].player
+                    }
+                }
+            }
+        }
+        
+        return nil
+    }
+    
+    private func calculateHorizontalWinner() -> Player?
+    {
+
+        for j in 0..<GameField.columns
+        {
+            for i in 0..<GameField.rows
+            {
+                if(GameField.columns >= j + 4)
+                {
+                    if field[j][i].player == field[j+1][i].player &&
+                        field[j][i].player == field[j+2][i].player &&
+                        field[j][i].player == field[j+3][i].player &&
+                        field[j][i].player != .none
+                    {
+                        return field[j][i].player
+                    }
+                }
+            }
+        }
+        
+        return nil
+    }
+    
+    private func calculateDiagonalLTRWinner() -> Player?
+    {
+        
+        return nil
+    }
+    private func calculateDiagonalRTLWinner() -> Player?
+    {
+        
+        return nil
     }
     
     private func switchPlayer()

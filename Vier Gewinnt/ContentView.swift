@@ -17,7 +17,7 @@ struct ContentView: View {
             {
                 gamefieldView
                 playerMoveView
-                
+                winnerView
             }
         }
     }
@@ -59,6 +59,18 @@ struct ContentView: View {
         {
             stoneView(.init(player: gameField.playersTurn))
             Text("Player \(gameField.playersTurn.rawValue) move")
+        }
+    }
+    
+    var winnerView: some View
+    {
+        HStack
+        {
+            if let winner = gameField.winner, winner != Player.none
+            {
+                stoneView(.init(player: winner))
+                Text("Player \(winner.rawValue) won!")
+            }
         }
     }
     
