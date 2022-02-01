@@ -76,8 +76,8 @@ public class GameField: ObservableObject
         var winner: Player? = nil
         winner = winner ?? calculateVerticalWinner()
         winner = winner ?? calculateHorizontalWinner()
-        winner = winner ?? calculateDiagonalLTRWinner()
-        winner = winner ?? calculateDiagonalRTLWinner()
+        winner = winner ?? calculateDiagonalLeftBottomToRightTopWinner()
+        winner = winner ?? calculateDiagonalLeftTopToRightBottomWinner()
         
         if let winner = winner {
             self.winner = winner
@@ -129,13 +129,44 @@ public class GameField: ObservableObject
         return nil
     }
     
-    private func calculateDiagonalLTRWinner() -> Player?
+    private func calculateDiagonalLeftBottomToRightTopWinner() -> Player?
     {
-        
+        for j in 0..<GameField.columns
+        {
+            for i in 0..<GameField.rows
+            {
+                if(GameField.columns >= j + 4 && i - 4 >= 0)
+                {
+                    if field[j][i].player == field[j+1][i-1].player &&
+                        field[j][i].player == field[j+2][i-2].player &&
+                        field[j][i].player == field[j+3][i-3].player &&
+                        field[j][i].player != .none
+                    {
+                        return field[j][i].player
+                    }
+                }
+            }
+        }
         return nil
     }
-    private func calculateDiagonalRTLWinner() -> Player?
+    private func calculateDiagonalLeftTopToRightBottomWinner() -> Player?
     {
+        for j in 0..<GameField.columns
+        {
+            for i in 0..<GameField.rows
+            {
+                if(GameField.rows >= i + 4 && j + 4 <= GameField.columns)
+                {
+                    if field[j][i].player == field[j+1][i+1].player &&
+                        field[j][i].player == field[j+2][i+2].player &&
+                        field[j][i].player == field[j+3][i+3].player &&
+                        field[j][i].player != .none
+                    {
+                        return field[j][i].player
+                    }
+                }
+            }
+        }
         
         return nil
     }
